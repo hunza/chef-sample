@@ -1,0 +1,16 @@
+upstream django-sample-app-uwsgi {
+  server 127.0.0.1:8002;
+}
+
+server {
+  listen 80;
+  server_name _;
+
+  include uwsgi_params;
+  uwsgi_param HTTP_X_FORWARDED_PROTO http;
+  uwsgi_param HTTP_X_FORWARDED_FOR $proxy_add_x_forwarded_for;
+
+  location ~ ^/ {
+    uwsgi_pass django-sample-app-uwsgi;
+  }
+}

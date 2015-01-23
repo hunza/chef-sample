@@ -43,6 +43,25 @@ end
   end
 end
 
+## nginx
+include_recipe 'nginx::default'
+
+template "/etc/nginx/sites-available/django-sample-app" do
+  owner 'root'
+  group 'root'
+  mode 0644
+  source "nginx/django-sample-app.erb"
+end
+
+nginx_site 'default' do
+  enable false
+end
+
+nginx_site 'django-sample-app' do
+  enable true
+end
+
+## uWSGI
 directory "/var/apps/django-sample-app/etc/uwsgi" do
   owner 'ubuntu'
   group 'root'
@@ -53,7 +72,7 @@ template "/var/apps/django-sample-app/etc/uwsgi/django-sample-app-uwsgi.ini" do
   owner 'ubuntu'
   group 'root'
   mode 0644
-  source "django-sample-app-uwsgi.ini.erb"
+  source "uwsgi/django-sample-app-uwsgi.ini.erb"
   variables({
     :root_dir => '/var/apps/django-sample-app',
   })
