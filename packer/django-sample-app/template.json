@@ -1,0 +1,41 @@
+{
+    "variables": {
+        "aws_access_key": "",
+        "aws_secret_key": "",
+        "security_group_id": "",
+        "subnet_id": "",
+        "source_ami": "ami-4ceaed4d"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "access_key": "{{user `aws_access_key`}}",
+        "secret_key": "{{user `aws_secret_key`}}",
+        "region": "ap-northeast-1",
+        "source_ami": "{{user `source_ami`}}",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "django-sample-app-{{isotime | clean_ami_name}}",
+        "security_group_id": "{{user `security_group_id`}}",
+        "subnet_id": "{{user `subnet_id`}}"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "sudo apt-get update",
+            "sudo unattended-upgrade --debug",
+            "sudo apt-get autoremove -y"
+        ]
+    }, {
+        "type": "chef-solo",
+        "cookbook_paths": ["cookbooks", "site-cookbooks"],
+        "environments_path": "environments",
+        "roles_path": "roles",
+        "data_bags_path": "data_bags",
+        "json": {},
+        "run_list": [
+            "recipe[app::default]",
+            "recipe[app::proxy]",
+            "recipe[app::uwsgi]"
+        ]
+    }]
+}

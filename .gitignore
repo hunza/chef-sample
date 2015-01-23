@@ -8,6 +8,8 @@ cookbooks
 .\#*
 *.orig
 *.diff
+.DS_Store
+nodes/ec2-*.json
 
 ## packer
 packer_cache/

@@ -1,5 +1,7 @@
 {
-  "run_list": [
-    "recipe[app::default]"
-  ]
+    "run_list": [
+        "recipe[app::default]",
+        "recipe[app::proxy]",
+        "recipe[app::uwsgi]"
+    ]
 }
