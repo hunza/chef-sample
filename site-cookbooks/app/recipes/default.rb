@@ -8,6 +8,14 @@ user 'deploy' do
   shell '/usr/sbin/nologin'
 end
 
+sudo 'deploy' do
+  user  'deploy'
+  commands [
+    '/usr/local/bin/supervisorctl',
+  ]
+  nopasswd true
+end
+
 %w{python-dev python-pip python-virtualenv}.each do |pkg|
   package pkg do
     action :install
