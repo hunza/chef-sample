@@ -1,0 +1,17 @@
+[uwsgi]
+workers = 2
+enable-threads
+home = <%= @root_dir %>/current/virtualenv
+chdir = <%= @root_dir %>/current
+module = django_sample_app.wsgi:application
+pidfile = <%= @root_dir %>/run/django-sample-app-uwsgi.pid
+master = True
+vacuum = True
+no-orphans = True
+max-requests = 200
+http = 0.0.0.0:8002
+post-buffering = 8192
+harakiri = 30
+harakiri-verbose
+memory-report
+logformat = %(host),%(time),%(ltime),%(method),%(status),%(size),%(micros),%(vsz),%(rss),%(django_user_id),%(django_namespace),%(django_view_name),%(hunza_platform),%(uri)
