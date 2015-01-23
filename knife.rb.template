@@ -1,0 +1,5 @@
+knife[:provisioning_path] = "/tmp/chef-solo"
+
+cookbook_path "site-cookbooks"
+role_path "roles"
+data_bag_path "data_bags"

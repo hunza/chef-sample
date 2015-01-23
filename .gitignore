@@ -1,0 +1,18 @@
+knife.rb
+cookbooks
+.kitchen
+.vagrant
+*~
+._*
+\#*
+.\#*
+*.orig
+*.diff
+
+## packer
+packer_cache/
+
+## ruby ignorables
+.bundle
+vendor
+/cookbooks/
