@@ -4,7 +4,8 @@
         "aws_secret_key": "",
         "security_group_id": "",
         "subnet_id": "",
-        "source_ami": "ami-3b71953b"
+        "source_ami": "ami-3b71953b",
+        "chef_environment": "dev"
     },
     "builders": [{
         "type": "amazon-ebs",
@@ -14,7 +15,7 @@
         "source_ami": "{{user `source_ami`}}",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "django-sample-app-{{isotime | clean_ami_name}}",
+        "ami_name": "django-sample-app-{{user `chef_environment`}}-{{isotime | clean_ami_name}}",
         "security_group_id": "{{user `security_group_id`}}",
         "subnet_id": "{{user `subnet_id`}}"
     }],
@@ -27,6 +28,7 @@
         ]
     }, {
         "type": "chef-solo",
+        "chef_environment": "{{user `chef_environment`}}",
         "cookbook_paths": ["cookbooks", "site-cookbooks"],
         "environments_path": "environments",
         "roles_path": "roles",
